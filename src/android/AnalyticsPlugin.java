@@ -48,12 +48,16 @@ public class AnalyticsPlugin extends CordovaPlugin {
             analytics = null;
             Log.e(TAG, "Invalid write key: " + writeKey);
         } else {
-            analytics = new Analytics.Builder(
-                cordova.getActivity().getApplicationContext(),
-                writeKey
-            ).logLevel(logLevel).build();
+            try{
+                analytics = new Analytics.Builder(
+                    cordova.getActivity().getApplicationContext(),
+                    writeKey
+                ).logLevel(logLevel).build();
 
-            Analytics.setSingletonInstance(analytics);
+                Analytics.setSingletonInstance(analytics);
+            }catch(Exception e){
+                Log.e(TAG,"Error: another instance of Analytics exists.");
+            }
         }
     }
 
